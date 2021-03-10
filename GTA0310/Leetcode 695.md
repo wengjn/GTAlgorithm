@@ -44,6 +44,7 @@ Note: The length of each dimension in the given grid does not exceed 50.
 
 - We want to get the max area of connected 1s in the grid.
 - If we are on 1, DFS from this point to get the area, any 1s that directed connected will be counted into the area. Once it is counted, marked it as 0. This 0 is now working as a visited node and also ensure we don't count it more than once. In this way, we don't need another visited[m][n] grid to keep track of the visited island. 
+- We can also use BFS to get the area from every 1. 
 
 ### Complexity Analysis
 
@@ -79,6 +80,56 @@ public class Solution {
                    DFS(grid, i+1, j) +
                    DFS(grid, i, j-1) +
                    DFS(grid, i, j+1);
+    }
+}
+```
+
+```c#
+public class Solution {
+    public int MaxAreaOfIsland(int[][] grid) {
+        if (grid == null || grid.Length == 0 || grid[0].Length == 0) return 0;
+        var directions = new int[][] {
+            new int[] { -1, 0 },
+            new int[] { 1, 0 },
+            new int[] { 0, -1 },
+            new int[] { 0, 1 }
+        };
+        int ans = 0;
+        
+        for (int i=0; i<grid.Length; i++) {
+            for (int j=0; j<grid[0].Length; j++) {
+                if (grid[i][j] == 1) {
+                    var area = BFS(grid, i, j, directions);
+                    ans = Math.Max(ans, area);
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    public int BFS(int[][] grid, int i, int j, int[][] directions) {
+        var q = new Queue<(int x, int y)>();
+        q.Enqueue((i, j));
+        grid[i][j] = 0; // once enqueue should mark as 0
+        int area = 0;
+        
+        while (q.Count > 0) {
+            var size = q.Count;
+            for (int k=0; k<size; k++) {
+                var node = q.Dequeue();
+                area++;
+                foreach (var dir in directions) {
+                    var newx = node.x + dir[0];
+                    var newy = node.y + dir[1];
+                    if (newx < 0 || newy < 0 || newx >= grid.Length || newy >= grid[0].Length || grid[newx][newy] == 0) continue;
+                    q.Enqueue((newx, newy));
+                    grid[newx][newy] = 0;
+                }
+            }
+        }
+        
+        return area;
     }
 }
 ```
