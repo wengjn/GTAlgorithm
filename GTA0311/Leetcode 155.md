@@ -1,4 +1,4 @@
-## 695. Max Area of Island
+## 155. Min Stack
 
 ### GTA tag
 ![img](../gta.png)
@@ -11,7 +11,7 @@
 
 ### Problem
 
-*Medium*
+*Easy*
 [leetcode link here](https://leetcode.com/problems/min-stack/)
 
 Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
