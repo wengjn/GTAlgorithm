@@ -48,6 +48,7 @@ minStack.getMin(); // return -2
 - Read carefully, it needs all operation to be O(1). We can rule out to use search or heap. And we only get the min, not removing them from stack. Numbers in the stack can be the same, not necessary unique. Using built-in stack should be good.
 - Two stacks approach. One to save all raw data, one to only save the min. If the same as min, also push.
 - Improved one. if min is repetive, we only want to know the count of this min, no need to save it as a data in the stack. In this case, we have the min stack to keep a pair. item1 is the actual value and item2 is the count.
+- Or we can even have one stack and the value can be a tuple of (value, currentMin), every time when you do push, Use GetMin() to get current min and compare with the value to push
 
 ### Complexity Analysis
 
